@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using WishList.Data;
@@ -17,7 +18,7 @@ namespace WishList.Controllers
 
         public IActionResult Index()
         {
-            var items = _context.Items;
+            var items = _context.Items.ToList();
 
             return View("Index", items);
         }
@@ -35,8 +36,8 @@ namespace WishList.Controllers
         }
         public IActionResult Delete(int Id)
         {
-            var item = _context.Items.Find(Id);
-            _context.Items.Remove(item);
+            
+            _context.Remove(Id);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
